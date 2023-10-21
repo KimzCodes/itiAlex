@@ -1,41 +1,20 @@
-import { useState } from "react";
-import UserInfo from "./components/UserInfo";
+import useGetUsers from "./hooks/useGetUsers";
+import UserList from "./components/UserList";
+import Loading from "./components/Loading";
 
 const App = () => {
-  // state
-  const [users, setUsers] = useState([
-    { id: 1, name: "kareem", age: 30 },
-    { id: 2, name: "ahmed", age: 31 },
-  ]);
+  const [loading, error, userData, deleteRequest] = useGetUsers();
 
-  // handler to set state
-  const saveHandler = () => {
-    ///x1
-    setUsers([...users, { id: 4, name: "esraa", age: 30 }]);
-  };
-
-  // delete callback
   const deleteHandler = (id) => {
-    setUsers(users.filter((user) => user.id !== id));
+    deleteRequest(id);
   };
-
-  //loop for components
-  const userList = users.map((user) => (
-    <UserInfo
-      id={user.id}
-      name={user.name}
-      age={user.age}
-      key={user.id}
-      delete={deleteHandler}
-    />
-  ));
 
   return (
     <div>
-      <button type="button" onClick={saveHandler}>
-        Insert
-      </button>
-      {userList}
+      <h3>Users List:</h3>
+      <Loading loading={loading} error={error}>
+        <UserList users={userData} deleteHandler={deleteHandler} />
+      </Loading>
     </div>
   );
 };

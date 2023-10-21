@@ -1,13 +1,13 @@
 import "./styles.css";
 
-const UserInfo = (props) => {
+const UserInfo = ({ id, name, age, deleteHandler }) => {
   return (
     <div className="userInfo">
       <ul>
-        <li>name:{props.name}</li>
-        <li>age: {props.age}</li>
+        <li>name:{name}</li>
+        <li>age: {age}</li>
         <li>
-          <button onClick={() => props.delete(props.id)}>Delete</button>
+          <button onClick={() => deleteHandler(id)}>Delete</button>
         </li>
       </ul>
     </div>
